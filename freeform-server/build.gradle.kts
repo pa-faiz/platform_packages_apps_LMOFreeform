@@ -30,7 +30,6 @@ dependencies {
     implementation(libs.gson)
     implementation(projects.service)
     implementation(libs.hiddenapirefineruntime)
-    compileOnly(projects.hiddenApi)
     compileOnly(libs.core.ktx)
 }
 

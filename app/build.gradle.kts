@@ -75,7 +75,6 @@ dependencies {
     androidTestImplementation(platform(libs.compose.bom))
 
     compileOnly(files("libs/XposedBridgeAPI-89.jar"))
-    compileOnly(projects.hiddenApi)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
