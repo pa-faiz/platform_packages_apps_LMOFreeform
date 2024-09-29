@@ -45,8 +45,8 @@ class ServiceViewModel(private val application: Application): AndroidViewModel(a
 
     private val predictedAppList = MutableStateFlow<List<AppInfo>>(emptyList())
 
-    private val launcherApps = application.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-    private val appPredictionManager = application.getSystemService(AppPredictionManager::class.java)
+    private val launcherApps = application.getSystemService(Context.LAUNCHER_APPS_SERVICE)!! as LauncherApps
+    private val appPredictionManager = application.getSystemService(AppPredictionManager::class.java)!!
 
     private lateinit var appPredictor: AppPredictor
     private val handlerExecutor = HandlerExecutor(Handler())

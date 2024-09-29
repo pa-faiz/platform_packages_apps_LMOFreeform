@@ -113,9 +113,10 @@ class FreeformWindow(
                 dlog(TAG, "moving taskId=${appConfig.taskId} to freeform display")
                 freeformTaskStackListener!!.taskId = appConfig.taskId
                 runCatching {
-                    if (SystemServiceHolder.activityTaskManager.getTaskDescription(appConfig.taskId) == null) {
-                        throw Exception("stale task")
-                    }
+                    // TODO: find a new way for this since getTaskDescription was removed in fwb commit a7cae90a991e
+                    // if (SystemServiceHolder.activityTaskManager.getTaskDescription(appConfig.taskId) == null) {
+                    //     throw Exception("stale task")
+                    // }
                     SystemServiceHolder.activityTaskManager.moveRootTaskToDisplay(appConfig.taskId, displayId)
                 }
                 .onFailure { e ->

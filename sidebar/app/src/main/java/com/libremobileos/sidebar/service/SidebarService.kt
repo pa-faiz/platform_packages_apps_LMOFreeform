@@ -185,7 +185,6 @@ class SidebarService : Service(), SharedPreferences.OnSharedPreferenceChangeList
                     LayoutParams.FLAG_HARDWARE_ACCELERATED
             privateFlags = LayoutParams.SYSTEM_FLAG_SHOW_FOR_ALL_USERS or
                     LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY or
-                    LayoutParams.PRIVATE_FLAG_USE_BLAST or
                     LayoutParams.PRIVATE_FLAG_SYSTEM_APPLICATION_OVERLAY
             format = PixelFormat.RGBA_8888
             windowAnimations = android.R.style.Animation_Dialog

@@ -187,4 +187,8 @@ class FreeformTaskStackListener(
     override fun onLockTaskModeChanged(mode: Int) {
 
     }
+
+    override fun onTaskSnapshotInvalidated(taskId: Int) {
+
+    }
 }

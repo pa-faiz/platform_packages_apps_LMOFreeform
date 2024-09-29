@@ -16,6 +16,7 @@ import android.view.SurfaceControl;
 
 import java.io.PrintWriter;
 
+import com.android.server.display.feature.DisplayManagerFlags;
 import com.libremobileos.freeform.ILMOFreeformDisplayCallback;
 
 public class LMOFreeformDisplayAdapter extends DisplayAdapter {
@@ -38,9 +39,10 @@ public class LMOFreeformDisplayAdapter extends DisplayAdapter {
             Handler handler,
             DisplayDeviceRepository listener,
             LogicalDisplayMapper logicalDisplayMapper,
-            Handler uiHandler
+            Handler uiHandler,
+            DisplayManagerFlags featureFlags
     ) {
-        super(syncRoot, context, handler, listener, TAG);
+        super(syncRoot, context, handler, listener, TAG, featureFlags);
         mHandler = handler;
         mUiHandler = uiHandler;
         mLogicalDisplayMapper = logicalDisplayMapper;
@@ -66,7 +68,7 @@ public class LMOFreeformDisplayAdapter extends DisplayAdapter {
         synchronized (getSyncRoot()) {
             IBinder appToken = callback.asBinder();
             FreeformFlags flags = new FreeformFlags(secure, ownContentOnly, shouldShowSystemDecorations);
-            IBinder displayToken = DisplayControl.createDisplay(UNIQUE_ID_PREFIX + name, flags.mSecure, refreshRate);
+            IBinder displayToken = DisplayControl.createVirtualDisplay(name, flags.mSecure, UNIQUE_ID_PREFIX + name, refreshRate);
             FreeformDisplayDevice device = new FreeformDisplayDevice(displayToken, UNIQUE_ID_PREFIX + name, width, height, densityDpi,
                     refreshRate, presentationDeadlineNanos,
                     flags, surface, new Callback(callback, mHandler), callback.asBinder());
@@ -189,7 +191,7 @@ public class LMOFreeformDisplayAdapter extends DisplayAdapter {
                 mSurface.release();
                 mSurface = null;
             }
-            DisplayControl.destroyDisplay(getDisplayTokenLocked());
+            DisplayControl.destroyVirtualDisplay(getDisplayTokenLocked());
             if (binderAlive) {
                 mCallback.dispatchDisplayStopped();
             }

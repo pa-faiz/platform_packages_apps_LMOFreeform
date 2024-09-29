@@ -32,7 +32,7 @@ fun SidebarSettingsPage(
     viewModel: SidebarSettingsViewModel
 ) {
     val navController = rememberNavController()
-    val mainChecked = rememberSaveable { mutableStateOf(viewModel.getSidebarEnabled()) }
+    var mainChecked = rememberSaveable { mutableStateOf(viewModel.getSidebarEnabled()) }
 
     CompositionLocalProvider(navController.localNavController()) {
         SettingsScaffold(
@@ -43,7 +43,7 @@ fun SidebarSettingsPage(
             ) {
                 MainSwitchPreference(object : SwitchPreferenceModel {
                     override val title = stringResource(R.string.enable_sideline)
-                    override val checked = mainChecked
+                    override val checked = { mainChecked.value }
                     override val onCheckedChange: (Boolean) -> Unit = {
                         mainChecked.value = it
                         viewModel.setSidebarEnabled(it)
@@ -87,7 +87,7 @@ fun SidebarAppListItem(
     appInfo: SidebarAppInfo,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val checked = remember { mutableStateOf(appInfo.isSidebarApp) }
+    var appChecked = remember { mutableStateOf(appInfo.isSidebarApp) }
     SwitchPreference(
         model = object : SwitchPreferenceModel {
             override val title = appInfo.label
@@ -98,9 +98,9 @@ fun SidebarAppListItem(
                     modifier = Modifier.size(SettingsDimension.appIconItemSize)
                 )
             }
-            override val checked = checked
+            override val checked = { appChecked.value }
             override val onCheckedChange: (Boolean) -> Unit = {
-                checked.value = it
+                appChecked.value = it
                 onCheckedChange(it)
             }
         },
